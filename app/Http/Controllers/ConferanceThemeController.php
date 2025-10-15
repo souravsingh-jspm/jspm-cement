@@ -18,36 +18,36 @@ class ConferanceThemeController extends Controller
             'ct_short_description' => 'sometimes|required|string',
         ]);
 
-        $cfpid = ConferanceTheme::create($validated);
+        $conferanceTheme = ConferanceTheme::create($validated);
 
-        return response()->json(['message' => 'Created successfully', 'data' => $cfpid], 201);
+        return response()->json(['message' => 'Created successfully', 'data' => $conferanceTheme], 201);
     }
 
-    public function show(ConferanceTheme $conferanceTheme)
+    public function show(ConferanceTheme $conferancetheme)
     {
-       return response()->json($conferanceTheme);
+       return response()->json($conferancetheme);
     }
 
-    public function edit(ConferanceTheme $conferanceTheme)
+    public function edit(ConferanceTheme $conferancetheme)
     {
-        return response()->json($conferanceTheme);
+        return response()->json($conferancetheme);
     }
 
-    public function update(Request $request, ConferanceTheme $conferanceTheme)
+    public function update(Request $request, ConferanceTheme $conferancetheme)
     {
         $validated = $request->validate([
             'ct_title' => 'sometimes|required|string',
             'ct_short_description' => 'sometimes|required|string',
         ]);
 
-        $conferanceTheme->update($validated);
+        $conferancetheme->update($validated);
 
-        return response()->json(['message' => 'Updated successfully', 'data' => $conferanceTheme], 200);
+        return response()->json(['message' => 'Updated successfully', 'data' => $conferancetheme], 200);
     }
 
-    public function destroy(ConferanceTheme $conferanceTheme)
+    public function destroy(ConferanceTheme $conferancetheme)
     {
-        $conferanceTheme->delete();
+        $conferancetheme->delete();
         return response()->json(['message' => 'Deleted successfully']);
     }
 }

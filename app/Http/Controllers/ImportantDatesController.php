@@ -21,22 +21,22 @@ class ImportantDatesController extends Controller
             'id_description' => 'sometimes|required|string',
         ]);
 
-        $cfpid = ImportantDates::create($validated);
+        $importantdate = ImportantDates::create($validated);
 
-        return response()->json(['message' => 'Created successfully', 'data' => $cfpid], 201);
+        return response()->json(['message' => 'Created successfully', 'data' => $importantdate], 201);
     }
 
-    public function show(ImportantDates $ImportantDates)
+    public function show(ImportantDates $importantdate)
     {
-       return response()->json($ImportantDates);
+       return response()->json($importantdate);
     }
 
-    public function edit(ImportantDates $ImportantDates)
+    public function edit(ImportantDates $importantdate)
     {
-        return response()->json($ImportantDates);
+        return response()->json($importantdate);
     }
 
-    public function update(Request $request, ImportantDates $ImportantDates)
+    public function update(Request $request, ImportantDates $importantdate)
     {
         $validated = $request->validate([
             'id_title' => 'sometimes|required|string',
@@ -44,14 +44,14 @@ class ImportantDatesController extends Controller
             'id_description' => 'sometimes|required|string',
         ]);
 
-        $ImportantDates->update($validated);
+        $importantdate->update($validated);
 
-        return response()->json(['message' => 'Updated successfully', 'data' => $ImportantDates], 200);
+        return response()->json(['message' => 'Updated successfully', 'data' => $importantdate], 200);
     }
 
-    public function destroy(ImportantDates $ImportantDates)
+    public function destroy(ImportantDates $importantdate)
     {
-        $ImportantDates->delete();
+        $importantdate->delete();
         return response()->json(['message' => 'Deleted successfully']);
     } 
 }

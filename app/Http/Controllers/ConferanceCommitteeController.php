@@ -21,22 +21,22 @@ class ConferanceCommitteeController extends Controller
             'cc_designation' => 'sometimes|required|string',
         ]);
 
-        $cfpid = ConferanceCommittee::create($validated);
+        $ConferanceCommittee = ConferanceCommittee::create($validated);
 
-        return response()->json(['message' => 'Created successfully', 'data' => $cfpid], 201);
+        return response()->json(['message' => 'Created successfully', 'data' => $ConferanceCommittee], 201);
     }
 
-    public function show(ConferanceCommittee $ConferanceCommittee)
+    public function show(ConferanceCommittee $conferancecommittee)
     {
-       return response()->json($ConferanceCommittee);
+       return response()->json($conferancecommittee);
     }
 
-    public function edit(ConferanceCommittee $ConferanceCommittee)
+    public function edit(ConferanceCommittee $conferancecommittee)
     {
-        return response()->json($ConferanceCommittee);
+        return response()->json($conferancecommittee);
     }
 
-    public function update(Request $request, ConferanceCommittee $ConferanceCommittee)
+    public function update(Request $request, ConferanceCommittee $conferancecommittee)
     {
         $validated = $request->validate([
             'role' => 'sometimes|required|string',
@@ -45,14 +45,14 @@ class ConferanceCommitteeController extends Controller
             'cc_designation' => 'sometimes|required|string',
         ]);
 
-        $ConferanceCommittee->update($validated);
+        $conferancecommittee->update($validated);
 
-        return response()->json(['message' => 'Updated successfully', 'data' => $ConferanceCommittee], 200);
+        return response()->json(['message' => 'Updated successfully', 'data' => $conferancecommittee], 200);
     }
 
-    public function destroy(ConferanceCommittee $ConferanceCommittee)
+    public function destroy(ConferanceCommittee $conferancecommittee)
     {
-        $ConferanceCommittee->delete();
+        $conferancecommittee->delete();
         return response()->json(['message' => 'Deleted successfully']);
     }
 }

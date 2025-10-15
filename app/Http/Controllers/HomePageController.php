@@ -21,22 +21,22 @@ class HomePageController extends Controller
             'about_soces' => 'sometimes|required|string',
         ]);
 
-        $cfpid = HomePage::create($validated);
+        $homepage = HomePage::create($validated);
 
-        return response()->json(['message' => 'Created successfully', 'data' => $cfpid], 201);
+        return response()->json(['message' => 'Created successfully', 'data' => $homepage], 201);
     }
 
-    public function show(HomePage $HomePage)
+    public function show(HomePage $homepage)
     {
-       return response()->json($HomePage);
+       return response()->json($homepage);
     }
 
-    public function edit(HomePage $HomePage)
+    public function edit(HomePage $homepage)
     {
-        return response()->json($HomePage);
+        return response()->json($homepage);
     }
 
-    public function update(Request $request, HomePage $HomePage)
+    public function update(Request $request, HomePage $homepage)
     {
         $validated = $request->validate([
             'home_page_title' => 'sometimes|required|string',
@@ -45,14 +45,14 @@ class HomePageController extends Controller
             'about_soces' => 'sometimes|required|string',
         ]);
 
-        $HomePage->update($validated);
+        $homepage->update($validated);
 
-        return response()->json(['message' => 'Updated successfully', 'data' => $HomePage], 200);
+        return response()->json(['message' => 'Updated successfully', 'data' => $homepage], 200);
     }
 
-    public function destroy(HomePage $HomePage)
+    public function destroy(HomePage $homepage)
     {
-        $HomePage->delete();
+        $homepage->delete();
         return response()->json(['message' => 'Deleted successfully']);
     }
 }

@@ -20,36 +20,40 @@ class KeyNoteSpeakerController extends Controller
             'kns_designation' => 'sometimes|required|string',
         ]);
 
-        $cfpid = KeyNoteSpeaker::create($validated);
+        $keynotespeaker = KeyNoteSpeaker::create($validated);
 
-        return response()->json(['message' => 'Created successfully', 'data' => $cfpid], 201);
+        return response()->json(['message' => 'Created successfully', 'data' => $keynotespeaker], 201);
     }
 
-    public function show(KeyNoteSpeaker $KeyNoteSpeaker)
+    public function show(KeyNoteSpeaker $keynotespeaker)
     {
-       return response()->json($KeyNoteSpeaker);
+       return response()->json($keynotespeaker);
     }
 
-    public function edit(KeyNoteSpeaker $KeyNoteSpeaker)
+    public function edit(KeyNoteSpeaker $keynotespeaker)
     {
-        return response()->json($KeyNoteSpeaker);
+        return response()->json($keynotespeaker);
     }
 
-    public function update(Request $request, KeyNoteSpeaker $KeyNoteSpeaker)
+    public function update(Request $request, KeyNoteSpeaker $keynotespeaker)
+
     {
-        $validated = $request->validate([
-            'kns_image' => 'sometimes|required|string',
-            'kns_name' => 'sometimes|required|string',
-            'kns_designation' => 'sometimes|required|string',
-        ]);
+    $validated = $request->validate([
+        'kns_image' => 'sometimes|required|string',
+        'kns_name' => 'sometimes|required|string',
+        'kns_designation' => 'sometimes|required|string',
+    ]);
 
-        $KeyNoteSpeaker->update($validated);
+    $keynotespeaker->update($validated);
 
-        return response()->json(['message' => 'Updated successfully', 'data' => $KeyNoteSpeaker], 200);
+    return response()->json([
+        'message' => 'Updated successfully',
+        'data' => $keynotespeaker
+    ], 200);
     }
 
-    public function destroy(KeyNoteSpeaker $KeyNoteSpeaker)
+    public function destroy(KeyNoteSpeaker $keynotespeaker)
     {
-        $KeyNoteSpeaker->delete();
+        $keynotespeaker->delete();
         return response()->json(['message' => 'Deleted successfully']);
     }}

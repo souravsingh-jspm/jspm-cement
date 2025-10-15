@@ -7,47 +7,47 @@ use Illuminate\Http\Request;
 
 class ConferanceThemeController extends Controller
 {
-    public function index()
-{
-    $tasks = ConferanceTheme::all();
-    return view('tasks.index', compact('tasks'));
-    }
-
-    public function create()
-    {
-        return view('tasks.create');
+    public function index(){
+        return response()->json(ConferanceTheme::all());
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
+        $validated = $request->validate([
+            'ct_title' => 'sometimes|required|string',
+            'ct_short_description' => 'sometimes|required|string',
         ]);
 
-        ConferanceTheme::create($request->all());
-        return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
+        $cfpid = ConferanceTheme::create($validated);
+
+        return response()->json(['message' => 'Created successfully', 'data' => $cfpid], 201);
     }
 
-    public function edit(ConferanceTheme $task)
+    public function show(ConferanceTheme $conferanceTheme)
     {
-        return view('tasks.edit', compact('task'));
+       return response()->json($conferanceTheme);
     }
 
-    public function update(Request $request, ConferanceTheme $task)
+    public function edit(ConferanceTheme $conferanceTheme)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
+        return response()->json($conferanceTheme);
+    }
+
+    public function update(Request $request, ConferanceTheme $conferanceTheme)
+    {
+        $validated = $request->validate([
+            'ct_title' => 'sometimes|required|string',
+            'ct_short_description' => 'sometimes|required|string',
         ]);
 
-        $task->update($request->all());
-        return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');
+        $conferanceTheme->update($validated);
+
+        return response()->json(['message' => 'Updated successfully', 'data' => $conferanceTheme], 200);
     }
 
-    public function destroy(ConferanceTheme $task)
+    public function destroy(ConferanceTheme $conferanceTheme)
     {
-        $task->delete();
-        return redirect()->route('tasks.index')->with('success', 'Task deleted successfully.');
+        $conferanceTheme->delete();
+        return response()->json(['message' => 'Deleted successfully']);
     }
 }

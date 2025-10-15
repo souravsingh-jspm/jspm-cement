@@ -7,12 +7,12 @@ use App\Http\Controllers\ImportantDatesController;
 use App\Http\Controllers\KeyNoteSpeakerController;
 
 
-Route::resource('conferanceThemeController', ConferanceThemeController::class);
+Route::resource('conferancetheme', ConferanceThemeController::class);
 
-Route::resource('conferanceCommitteeController', ConferanceCommitteeController::class);
+Route::resource('conferancecommittee', ConferanceCommitteeController::class);
 
-Route::resource('homePageController', HomePageController::class);
+Route::resource('homepage', HomePageController::class);
 
-Route::resource('importrantDatesController', ImportantDatesController::class);
+Route::resource('importantdates', ImportantDatesController::class);
 
-Route::resource('keyNoteSpeakerController', KeyNoteSpeakerController::class);
+Route::resource('keynotespeaker', KeyNoteSpeakerController::class);

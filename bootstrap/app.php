@@ -15,13 +15,13 @@ return Application::configure(basePath: dirname(__DIR__))
             Route::middleware('api')
                 ->prefix('api/admin') // All routes will start with /api/admin
                 ->name('api.admin.') // Optional: adds a prefix to route names
-                ->group(base_path('routes/api_admin.php'));
+                ->group(base_path('routes/admin_api.php'));
 
             // For User API routes
             Route::middleware('api')
                 ->prefix('api/user') // All routes will start with /api/user
                 ->name('api.user.') // Optional: adds a prefix to route names
-                ->group(base_path('routes/api_common.php'));
+                ->group(base_path('routes/common_api.php'));
         }
     )
     ->withMiddleware(function (Middleware $middleware): void {

@@ -8,47 +8,48 @@ use App\Models\KeyNoteSpeaker;
 
 class KeyNoteSpeakerController extends Controller
 {
-
-    public function index()
-{
-    $tasks = KeyNoteSpeaker::all();
-    return view('tasks.index', compact('tasks'));
-    }
-
-    public function create()
-    {
-        return view('tasks.create');
+    public function index(){
+        return response()->json(KeyNoteSpeaker::all());
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
+        $validated = $request->validate([
+            'kns_image' => 'sometimes|required|string',
+            'kns_name' => 'sometimes|required|string',
+            'kns_designation' => 'sometimes|required|string',
         ]);
 
-        KeyNoteSpeaker::create($request->all());
-        return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
+        $cfpid = KeyNoteSpeaker::create($validated);
+
+        return response()->json(['message' => 'Created successfully', 'data' => $cfpid], 201);
     }
 
-    public function edit(KeyNoteSpeaker $task)
+    public function show(KeyNoteSpeaker $KeyNoteSpeaker)
     {
-        return view('tasks.edit', compact('task'));
+       return response()->json($KeyNoteSpeaker);
     }
 
-    public function update(Request $request, KeyNoteSpeaker $task)
+    public function edit(KeyNoteSpeaker $KeyNoteSpeaker)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
+        return response()->json($KeyNoteSpeaker);
+    }
+
+    public function update(Request $request, KeyNoteSpeaker $KeyNoteSpeaker)
+    {
+        $validated = $request->validate([
+            'kns_image' => 'sometimes|required|string',
+            'kns_name' => 'sometimes|required|string',
+            'kns_designation' => 'sometimes|required|string',
         ]);
 
-        $task->update($request->all());
-        return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');
+        $KeyNoteSpeaker->update($validated);
+
+        return response()->json(['message' => 'Updated successfully', 'data' => $KeyNoteSpeaker], 200);
     }
 
-    public function destroy(KeyNoteSpeaker $task)
+    public function destroy(KeyNoteSpeaker $KeyNoteSpeaker)
     {
-        $task->delete();
-        return redirect()->route('tasks.index')->with('success', 'Task deleted successfully.');
+        $KeyNoteSpeaker->delete();
+        return response()->json(['message' => 'Deleted successfully']);
     }}

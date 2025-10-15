@@ -9,46 +9,49 @@ use App\Models\ImportantDates;
 class ImportantDatesController extends Controller
 {
 
-    public function index()
-{
-    $tasks = ImportantDates::all();
-    return view('tasks.index', compact('tasks'));
-    }
-
-    public function create()
-    {
-        return view('tasks.create');
+    public function index(){
+        return response()->json(ImportantDates::all());
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
+        $validated = $request->validate([
+            'id_title' => 'sometimes|required|string',
+            'id_date' => 'sometimes|required|date',
+            'id_description' => 'sometimes|required|string',
         ]);
 
-        ImportantDates::create($request->all());
-        return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
+        $cfpid = ImportantDates::create($validated);
+
+        return response()->json(['message' => 'Created successfully', 'data' => $cfpid], 201);
     }
 
-    public function edit(ImportantDates $task)
+    public function show(ImportantDates $ImportantDates)
     {
-        return view('tasks.edit', compact('task'));
+       return response()->json($ImportantDates);
     }
 
-    public function update(Request $request, ImportantDates $task)
+    public function edit(ImportantDates $ImportantDates)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
+        return response()->json($ImportantDates);
+    }
+
+    public function update(Request $request, ImportantDates $ImportantDates)
+    {
+        $validated = $request->validate([
+            'id_title' => 'sometimes|required|string',
+            'id_date' => 'sometimes|required|date',
+            'id_description' => 'sometimes|required|string',
         ]);
 
-        $task->update($request->all());
-        return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');
+        $ImportantDates->update($validated);
+
+        return response()->json(['message' => 'Updated successfully', 'data' => $ImportantDates], 200);
     }
 
-    public function destroy(ImportantDates $task)
+    public function destroy(ImportantDates $ImportantDates)
     {
-        $task->delete();
-        return redirect()->route('tasks.index')->with('success', 'Task deleted successfully.');
-    }}
+        $ImportantDates->delete();
+        return response()->json(['message' => 'Deleted successfully']);
+    } 
+}

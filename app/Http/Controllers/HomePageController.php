@@ -8,47 +8,51 @@ use App\Models\HomePage;
 
 class HomePageController extends Controller
 {
-
-    public function index()
-{
-    $tasks = HomePage::all();
-    return view('tasks.index', compact('tasks'));
-    }
-
-    public function create()
-    {
-        return view('tasks.create');
+    public function index(){
+        return response()->json(HomePage::all());
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
+        $validated = $request->validate([
+            'home_page_title' => 'sometimes|required|string',
+            'about_jspm_group' => 'sometimes|required|string',
+            'about_jspm_university_pune' => 'sometimes|required|string',
+            'about_soces' => 'sometimes|required|string',
         ]);
 
-        HomePage::create($request->all());
-        return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
+        $cfpid = HomePage::create($validated);
+
+        return response()->json(['message' => 'Created successfully', 'data' => $cfpid], 201);
     }
 
-    public function edit(HomePage $task)
+    public function show(HomePage $HomePage)
     {
-        return view('tasks.edit', compact('task'));
+       return response()->json($HomePage);
     }
 
-    public function update(Request $request, HomePage $task)
+    public function edit(HomePage $HomePage)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
+        return response()->json($HomePage);
+    }
+
+    public function update(Request $request, HomePage $HomePage)
+    {
+        $validated = $request->validate([
+            'home_page_title' => 'sometimes|required|string',
+            'about_jspm_group' => 'sometimes|required|string',
+            'about_jspm_university_pune' => 'sometimes|required|string',
+            'about_soces' => 'sometimes|required|string',
         ]);
 
-        $task->update($request->all());
-        return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');
+        $HomePage->update($validated);
+
+        return response()->json(['message' => 'Updated successfully', 'data' => $HomePage], 200);
     }
 
-    public function destroy(HomePage $task)
-{
-    $task->delete();
-    return redirect()->route('tasks.index')->with('success', 'Task deleted successfully.');
-}}
+    public function destroy(HomePage $HomePage)
+    {
+        $HomePage->delete();
+        return response()->json(['message' => 'Deleted successfully']);
+    }
+}

@@ -8,47 +8,51 @@ use Illuminate\Http\Request;
 
 class ConferanceCommitteeController extends Controller
 {
-
-    public function index()
-{
-    $tasks = ConferanceCommittee::all();
-    return view('tasks.index', compact('tasks'));
-    }
-
-    public function create()
-    {
-        return view('tasks.create');
+    public function index(){
+        return response()->json(ConferanceCommittee::all());
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
+        $validated = $request->validate([
+            'role' => 'sometimes|required|string',
+            'cc_image' => 'sometimes|required|string',
+            'cc_name' => 'sometimes|required|string',
+            'cc_designation' => 'sometimes|required|string',
         ]);
 
-        ConferanceCommittee::create($request->all());
-        return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
+        $cfpid = ConferanceCommittee::create($validated);
+
+        return response()->json(['message' => 'Created successfully', 'data' => $cfpid], 201);
     }
 
-    public function edit(ConferanceCommittee $task)
+    public function show(ConferanceCommittee $ConferanceCommittee)
     {
-        return view('tasks.edit', compact('task'));
+       return response()->json($ConferanceCommittee);
     }
 
-    public function update(Request $request, ConferanceCommittee $task)
+    public function edit(ConferanceCommittee $ConferanceCommittee)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
+        return response()->json($ConferanceCommittee);
+    }
+
+    public function update(Request $request, ConferanceCommittee $ConferanceCommittee)
+    {
+        $validated = $request->validate([
+            'role' => 'sometimes|required|string',
+            'cc_image' => 'sometimes|required|string',
+            'cc_name' => 'sometimes|required|string',
+            'cc_designation' => 'sometimes|required|string',
         ]);
 
-        $task->update($request->all());
-        return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');
+        $ConferanceCommittee->update($validated);
+
+        return response()->json(['message' => 'Updated successfully', 'data' => $ConferanceCommittee], 200);
     }
 
-    public function destroy(ConferanceCommittee $task)
+    public function destroy(ConferanceCommittee $ConferanceCommittee)
     {
-        $task->delete();
-        return redirect()->route('tasks.index')->with('success', 'Task deleted successfully.');
-    }}
+        $ConferanceCommittee->delete();
+        return response()->json(['message' => 'Deleted successfully']);
+    }
+}

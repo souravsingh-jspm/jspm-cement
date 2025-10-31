@@ -12,4 +12,5 @@ class KeyNoteSpeaker extends Model
         'kns_image',
         'kns_name',
         'kns_designation'
-    ];}
+    ];
+}
